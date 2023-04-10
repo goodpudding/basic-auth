@@ -1,7 +1,7 @@
 'use strict';
 
 // 3rd Party Resources
-const express = require('express');
+// const express = require('express');
 const bcrypt = require('bcrypt');
 const base64 = require('base-64');
 const { Sequelize, DataTypes } = require('sequelize');
@@ -17,19 +17,19 @@ app.use(express.json());
 const sequelize = new Sequelize(DATABASE_URL);
 
 // Process FORM intput and put the data on req.body
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
 
 // Create a Sequelize model
-const Users = sequelize.define('User', {
-  username: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  }
-});
+// const Users = sequelize.define('User', {
+//   username: {
+//     type: DataTypes.STRING,
+//     allowNull: false,
+//   },
+//   password: {
+//     type: DataTypes.STRING,
+//     allowNull: false,
+//   }
+// });
 
 // Signup Route -- create a new user
 // Two ways to test this route with httpie
@@ -86,9 +86,9 @@ app.post('/signin', async (req, res) => {
 });
 
 // make sure our tables are created, start up the HTTP server.
-sequelize.sync()
-  .then(() => {
-    app.listen(3001, () => console.log('server up, listening on port ', PORT));
-  }).catch(e => {
-    console.error('Could not start server', e.message);
-  });
+// sequelize.sync()
+//   .then(() => {
+//     app.listen(3001, () => console.log('server up, listening on port ', PORT));
+//   }).catch(e => {
+//     console.error('Could not start server', e.message);
+//   });

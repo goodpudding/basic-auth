@@ -1,36 +1,33 @@
 'use strict';
 
-const basic = require('./basic');
+const basicAuth = require('./basic');
 const base64 = require('base-64');
 
-describe('Testing the basic Auth middleware', () =>{
-  test('Request contains all the proper credentials, expect next to be called', () => {
-    const endcodedMessage = base64.encode('username:password');
+const res = {
+  status: jest.fn().mockReturnThis(),
+  send: jest.fn(),
+};
+
+describe('Testing the basic Auth middleware', () => {
+  test('Request contains all the proper credentials, expect next to be called', async () => {
+    const encodedMessage = base64.encode('username:password');
     
     const request = {
       headers: {
-          authorization: `Basic ${endcodedMessage}`
+          authorization: `Basic ${encodedMessage}`
       }
     };
-    const response = {
-      send: 'I am a string',
-      status: jest.fn(),
-      json: {"I am JSON": 10000},
-    };
+    const response = res;
     const next = jest.fn();
-    basic(request, response, next);
+    await basicAuth(request, response, next);
     expect(next).toHaveBeenCalled();
   });
-  test('Request contains all the proper credentials, expect next to be called', () => {
-    const request = {headers:{}};
-    const response = {
-      send: jest.fn(()=>response),
-      status: jest.fn(()=>response),
-      json: jest.fn(()=>response),
-    };
+  test('Request contains incorrect credentials, expect Unauthorized credentials', async () => {
+    const request = {headers: {}};
+    const response = res;
     const next = jest.fn();
-    basic(request, response, next);
+    await basicAuth(request, response, next);
     expect(response.status).toHaveBeenCalledWith(403);
-    expect(response.send).toHaveBeenCalledWith('Invalid login');
+    expect(response.send).toHaveBeenCalledWith('Unauthorized credentials');
   });
-})
+});

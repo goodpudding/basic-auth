@@ -1,15 +1,14 @@
+const { Users } = require("../models");
+const bcrypt = require('bcrypt');
+const base64 = require('base-64');
 
-const express = require('express');
-const { Users }=require('../auth/models/index')
-const router = express.Router();
-console.log(Users);
-router.post('/signup', async (req, res)=>{
+async function handleSignIn (req, res){
   try {
-    let newUser = await Users.create(req.body);
-    res.status(200).json(newUser);
-  } catch (error) {
-    res.status(403).send('Error creating user', error)
-  }
-})
+    res.status(200).send('Log-in successful!');
+} catch (e) {
+    res.status(403).send('Unauthorized credentials');
+}
+};
 
-module.exports = router;
+
+module.exports = handleSignIn;

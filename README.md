@@ -3,7 +3,7 @@ Lab 6
 
 ## Deployed Site
 
-
+[Deployed Site](https://basic-auth-8aj2.onrender.com)
 
 ## UML
 
